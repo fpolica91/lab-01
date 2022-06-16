@@ -18,19 +18,28 @@ model Customer {
 }
 
 model Product {
-  id        String     @id @default(uuid())
-  createdAt DateTime   @default(now())
-  slug      String     @unique
-  updatedAt DateTime   @default(now()) @updatedAt
-  Purchase  Purchase[]
+  id          String     @id @default(uuid())
+  title       String
+  slug        String     @unique
+  PurchasedOn Purchase[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @default(now()) @updatedAt
+
+}
+
+enum Status {
+  PENDING
+  PAID
+  CANCELLED
 }
 
 model Purchase {
+  status     Status   @default(PENDING)
   id         String   @id @default(uuid())
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @default(now()) @updatedAt
   customer   Customer @relation(fields: [customerId], references: [id])
   customerId String
   product    Product  @relation(fields: [productId], references: [id])
   productId  String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now()) @updatedAt
 }
