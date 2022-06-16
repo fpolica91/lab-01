@@ -10,6 +10,13 @@ export class ProductsService {
     return await this.prisma.product.findMany();
   }
 
+  async findById(id) {
+    const product = await this.prisma.product.findUnique({
+      where: { id },
+    });
+    return product;
+  }
+
   async createProduct(product) {
     const slug = slugify(product.title, { lower: true });
     const productExists = await this.prisma.product.findUnique({

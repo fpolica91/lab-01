@@ -6,6 +6,8 @@ import path from 'node:path';
 import { ApolloDriver } from '@nestjs/apollo';
 import { ProductsResolver } from './grahpql/resolvers/products.resolver';
 import { ProductsService } from 'src/services/product.service';
+import { PurchasesResolver } from './grahpql/resolvers/purchases.resolver';
+import { PurchaseService } from 'src/services/purchase.service';
 
 @Module({
   imports: [
@@ -16,6 +18,11 @@ import { ProductsService } from 'src/services/product.service';
       autoSchemaFile: path.resolve(process.cwd(), 'src/schema.gql'),
     }),
   ],
-  providers: [ProductsResolver, ProductsService],
+  providers: [
+    ProductsResolver,
+    ProductsService,
+    PurchasesResolver,
+    PurchaseService,
+  ],
 })
 export class HttpModule {}
