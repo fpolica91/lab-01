@@ -1,4 +1,10 @@
-import { Resolver, Query, ResolveField, Parent } from '@nestjs/graphql';
+import {
+  Resolver,
+  Query,
+  ResolveField,
+  Parent,
+  Mutation,
+} from '@nestjs/graphql';
 import { ProductsService } from 'src/services/product.service';
 import { PurchaseService } from 'src/services/purchase.service';
 import { Purchase } from '../models/purchases';
@@ -18,5 +24,10 @@ export class PurchasesResolver {
   @ResolveField()
   async product(@Parent() purchase: Purchase) {
     return this.productsService.findById(purchase.productId);
+  }
+
+  @Mutation(() => Purchase)
+  async createPurchase() {
+    // return this.purchaseService.create();
   }
 }
