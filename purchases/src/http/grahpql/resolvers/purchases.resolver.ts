@@ -49,5 +49,4 @@ export class PurchasesResolver {
     });
     return purchase;
   }
-  // not seen
 }
