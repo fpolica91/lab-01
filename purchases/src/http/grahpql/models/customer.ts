@@ -3,6 +3,7 @@ import { Purchase } from './purchases';
 
 @ObjectType()
 export class Customer {
+  id: string;
   @Field(() => ID)
   authUserId: string;
 

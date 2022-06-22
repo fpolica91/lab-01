@@ -8,6 +8,8 @@ import { ProductsResolver } from './grahpql/resolvers/products.resolver';
 import { ProductsService } from 'src/services/product.service';
 import { PurchasesResolver } from './grahpql/resolvers/purchases.resolver';
 import { PurchaseService } from 'src/services/purchase.service';
+import { CustomersService } from 'src/services/customers.service';
+import { CustomerResolver } from './grahpql/resolvers/customer.resolver';
 
 @Module({
   imports: [
@@ -20,8 +22,11 @@ import { PurchaseService } from 'src/services/purchase.service';
   ],
   providers: [
     ProductsResolver,
-    ProductsService,
     PurchasesResolver,
+    CustomerResolver,
+
+    CustomersService,
+    ProductsService,
     PurchaseService,
   ],
 })
