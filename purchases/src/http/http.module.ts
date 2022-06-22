@@ -11,6 +11,7 @@ import { PurchaseService } from 'src/services/purchase.service';
 import { CustomersService } from 'src/services/customers.service';
 import { CustomerResolver } from './grahpql/resolvers/customer.resolver';
 
+// mod
 @Module({
   imports: [
     ConfigModule.forRoot(),
