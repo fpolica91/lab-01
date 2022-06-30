@@ -14,11 +14,12 @@ import { promisify } from 'node:util';
 export class AuthorizationGuard implements CanActivate {
   private AUTH0_AUDIENCE: string;
   private AUTH0_DOMAIN: string;
-  // simplest example of injection dependency
+
   constructor(private configService: ConfigService) {
     this.AUTH0_AUDIENCE = this.configService.get('AUTH0_AUDIENCE') ?? '';
     this.AUTH0_DOMAIN = this.configService.get('AUTH0_DOMAIN') ?? '';
   }
+
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const { req, res } = GqlExecutionContext.create(context).getContext();
 
@@ -28,18 +29,19 @@ export class AuthorizationGuard implements CanActivate {
           cache: true,
           rateLimit: true,
           jwksRequestsPerMinute: 5,
-          jwksUri: 'https://dev-vz24wox1.us.auth0.com/.well-known/jwks.json',
+          jwksUri: `${this.AUTH0_DOMAIN}.well-known/jwks.json`,
         }),
         audience: this.AUTH0_AUDIENCE,
         issuer: this.AUTH0_DOMAIN,
         algorithms: ['RS256'],
       }),
     );
+
     try {
       await checkJWT(req, res);
       return true;
-    } catch (error) {
-      throw new UnauthorizedException(error);
+    } catch (err) {
+      throw new UnauthorizedException(err);
     }
   }
 }

@@ -33,16 +33,18 @@ export class PurchasesResolver {
     return this.productsService.findById(purchase.productId);
   }
 
-  @UseGuards(AuthorizationGuard)
   @Mutation(() => Purchase)
+  @UseGuards(AuthorizationGuard)
   async createPurchase(
     @Args('data') data: CreatePruchase,
     @CurrentUser() user: AuthUser,
   ) {
     let customer = await this.customersService.getCustomerByAuth(user.sub);
+
     if (!customer) {
       customer = await this.customersService.createCustomer(user.sub);
     }
+    console.log(customer, 'the customer');
     const purchase = await this.purchaseService.createPurchase({
       customerId: customer.id,
       productId: data.productId,
